@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { getTitleCaseLabel, returnValByLabel } from '../util/investment.js';
 
 const GROUPS = [
@@ -6,18 +5,7 @@ const GROUPS = [
   ['Expected Return', 'Duration'],
 ];
 
-export default function UserInput() {
-  const [userInput, setUserInput] = useState({
-    initialInvestment: 10000,
-    annualInvestment: 1200,
-    expectedReturn: 6,
-    duration: 10,
-  });
-  function handleChange(inputIdentifier, newValue) {
-    setUserInput((prevUserInput) => {
-      return { ...prevUserInput, [inputIdentifier]: newValue };
-    });
-  }
+export default function UserInput({ onUserInput, userInput }) {
   return (
     <section id='user-input'>
       {GROUPS.map((group, groupIndex) => {
@@ -30,7 +18,7 @@ export default function UserInput() {
                   <input
                     value={returnValByLabel(label, userInput)}
                     onChange={(event) =>
-                      handleChange(getTitleCaseLabel(label), event.target.value)
+                      onUserInput(getTitleCaseLabel(label), event.target.value)
                     }
                     type='number'
                     required
